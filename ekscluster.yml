@@ -1,0 +1,33 @@
+---
+apiversion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: test1-cluster
+  region: ap-south-1
+
+vpc:
+  id: vpc-0e78145145af92258
+  cidr: "10.0.0.0/24"
+  subnets:
+    public:
+      public-one:
+        id: subnet-06085324569fb552f
+      public-two:
+        id: subnet-02736c074c614987e
+
+nodeGroups:
+  - name: ng-1
+    instanceType: t2.micro
+    desiredCapacity: 1
+    subnets:
+      - public-one
+    ssh: # import public key from file
+      publicKeyPath: ~/.ssh/id_rsa.pub
+  - name: ng-2
+    instanceType: t2.micro
+    desiredCapacity: 1
+    subnets:
+      - public-two
+    ssh: # import public key from file
+      publicKeyPath: ~/.ssh/id_rsa.pub

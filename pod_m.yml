@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multicontainer
+spec:
+  containers:
+  - name: jenkins
+    image: jenkins/jenkins
+  - name: ubuntu
+    image: ubuntu
+    ports:
+     - containerPort: 80
