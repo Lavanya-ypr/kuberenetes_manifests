@@ -1,14 +1,17 @@
 apiVersion: apps/v1
-kind: ReplicaSet
+kind: Deployment
 metadata:
-  name: tomcat-rpset
-
-
+  name: tomcat-deploy
 spec:
   replicas: 5
   selector:
     matchLabels:
       app: tomcat
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 2
   template:
     metadata:
       name: tomcat-pod
