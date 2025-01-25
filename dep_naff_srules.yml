@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-deploy
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: tomcat
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 2
+  template:
+    metadata:
+      name: tomcat-pod
+      labels:
+        app: tomcat
+    spec:
+      containers:
+       - name: tom-container
+         image: tomcat
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 50
+              preference:
+                matchExpressions:
+                  - key: stor
+                    operator: In
+                    values:
+                      - hhd
+            - weight: 50
+              preference:
+                matchExpressions:
+                  - key: stor
+                    operator: In
+                    values:
+                      - ssd
